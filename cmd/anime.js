@@ -4,7 +4,7 @@ module.exports = {
   config: {
     name: "anime",
     aliases: ["a9ime", "video"],
-    author: "Azad 💥", //author change korle tor marechudi 
+    author: "Azadx69x", //author change korle tor marechudi 
     version: "1.7",
     category: "media",
     guide: { en: "{p}{n} (optional: 'random')" },
@@ -12,12 +12,12 @@ module.exports = {
   onStart: async function ({ api, event, args }) {
     api.setMessageReaction("💫", event.messageID, () => {}, true);
 
-    const API_URL = "https://azadxxx-anime-api-e9em.onrender.com/api/anime";
+    const API_URL = "https://azadx69x-anime-api.onrender.com/api/anime";
 
     async function fetchRandomAnime() {
       try {
         const res = await axios.get(`${API_URL}/random`);
-        return res.data?.data?.download_link; // সঠিকভাবে ভিডিও URL পাওয়া যাবে
+        return res.data?.data?.download_link;
       } catch (err) {
         console.error("Error fetching anime video:", err.message);
         return null;
