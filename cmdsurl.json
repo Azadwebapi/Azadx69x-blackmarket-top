@@ -1,5 +1,6 @@
 {
   "anime": "https://raw.githubusercontent.com/Azadwebapi/Azadx69x-blackmarket-api/refs/heads/main/cmd/anime.js",
+  "cpanel":"https://raw.githubusercontent.com/Azadwebapi/Azadx69x-blackmarket-api/refs/heads/main/cmd/cpanel.js",
   "up":"https://raw.githubusercontent.com/Azadwebapi/Azadx69x-blackmarket-api/refs/heads/main/cmd/up.js",
   "blackjackimg":"https://raw.githubusercontent.com/Azadwebapi/Azadx69x-blackmarket-api/refs/heads/main/cmd/blackjackimg.js",
   "uptime": "https://raw.githubusercontent.com/Azadwebapi/Azadx69x-blackmarket-api/refs/heads/main/cmd/uptime.js",
