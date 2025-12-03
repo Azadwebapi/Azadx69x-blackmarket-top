@@ -1,7 +1,6 @@
 {
-  "apiv1": "https://azadx69x-dashboard-api-zmh0.onrender.com",
-  "apiv2": "https://azadx69x-404-album-api.onrender.com",
-  "apiv3": "https://xsaim8x-xxx-api.onrender.com",
-  "apiv4": "https://dev.oculux.xyz"
-  "apiv5": "https://azadx69x-anime-api.onrender.com",
+  "api": "https://azadx69x-dashboard-api-zmh0.onrender.com",
+  "album": "https://azadx69x-404-album-api.onrender.com",
+  "api": "https://dev.oculux.xyz"
+  "anime": "https://azadx69x-anime-api.onrender.com",
 }
