@@ -1,5 +1,7 @@
 {
   "api": "https://azadx69x-dashboard-api-zmh0.onrender.com",
+  "segs": "https://azadx69x-segs.onrender.com",
   "album": "https://azadx69x-404-album-api.onrender.com",
-  "anime": "https://azadx69x-anime-api.onrender.com"
+  "anime": "https://azadx69x-anime-api.onrender.com",
+  "tiktok": "https://azadx69x-tiktok-api.onrender.com"
 }
