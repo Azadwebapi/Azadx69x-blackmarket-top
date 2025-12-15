@@ -1,7 +1,7 @@
 {
   "api": "https://azadx69x-dashboard-api-zmh0.onrender.com",
-  "segs": "https://azadx69x-segs.onrender.com",
+  "segs": "https://azadx69x-segs.vercel.app/",
   "album": "https://azadx69x-album-top.vercel.app/",
   "anime": "https://azadx69x-anime-api.onrender.com",
-  "tiktok": "https://azadx69x-tiktok-api.onrender.com"
+  "tiktok": "https://azadx69x-tiktok-api.vercel.app/"
 }
