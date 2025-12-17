@@ -1,12 +1,13 @@
 const axios = require("axios");
 const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   config: {
     name: "tiktok",
     aliases: ["tt", "tok", "tktk"],
-    version: "1.1",
-    author: "Azadx69x",//author change korle tor marechudi 
+    version: "1.2",
+    author: "Azadx69x",
     role: 0,
     shortDescription: "Random TikTok video",
     longDescription: "Send random TikTok video",
@@ -17,9 +18,9 @@ module.exports = {
   onStart: async function ({ message, args }) {
     return this.run({ message, args });
   },
-  
+
   onChat: async function ({ message, args, event }) {
-    const body = event.body?.toLowerCase() || "";
+    const body = (event.body || "").toLowerCase();
     if (!body.startsWith("tt ") && !body.startsWith("tiktok ")) return;
     args = body.split(" ").slice(1);
     return this.run({ message, args });
@@ -28,31 +29,31 @@ module.exports = {
   run: async function ({ message, args }) {
     try {
       const query = args.join(" ");
-      if (!query)
-        return message.reply("⚠️ Please enter a search keyword!");
+      if (!query) return message.reply("⚠️ Please enter a search keyword!");
 
       await message.reply(`🔍 Searching for *${query}*...`);
 
-      const apiUrl = `https://azadx69x-tiktok-api.onrender.com/tiktok/search?query=${encodeURIComponent(query)}`;
+      const apiUrl = `https://azadx69x-tiktok-api.vercel.app/tiktok/search?query=${encodeURIComponent(query)}`;
       const { data } = await axios.get(apiUrl);
 
-      if (!data?.list?.length)
-        return message.reply("❌ No video found!");
+      if (!data?.list?.length) return message.reply("❌ No video found!");
 
       const random = data.list[Math.floor(Math.random() * data.list.length)];
       const videoUrl = random.play;
       const title = random.title || "Unknown";
       const author = random.author?.nickname || "Unknown";
 
-      const filePath = __dirname + "/tiktok.mp4";
-      const stream = await axios({ url: videoUrl, responseType: "stream" });
-      stream.data.pipe(fs.createWriteStream(filePath));
+      const filePath = path.join(__dirname, `tiktok_${Date.now()}.mp4`);
 
-      stream.data.on("end", () => {
-        message.reply({
+      const writer = fs.createWriteStream(filePath);
+      const response = await axios({ url: videoUrl, responseType: "stream" });
+      response.data.pipe(writer);
+
+      writer.on("finish", async () => {
+        await message.reply({
           body:
 `━━━━━━━━━━━━━━━━━━━━━
-   ✨_TikTok Video Fetched!
+   ✨ TikTok Video Fetched!
 ╭─╼━━━━━━━━━━━━━━╾─╮
 │ 🔍 Search: ${query}
 │ 🎞️ Title: ${title}
@@ -62,10 +63,14 @@ module.exports = {
 ━━━━━━━━━━━━━━━━━━━━━━`,
           attachment: fs.createReadStream(filePath)
         });
+
+        fs.unlinkSync(filePath);
       });
 
+      writer.on("error", () => message.reply("❌ Error saving video!"));
+
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return message.reply("❌ Error fetching video!");
     }
   }
