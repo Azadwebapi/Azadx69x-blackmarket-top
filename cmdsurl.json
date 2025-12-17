@@ -1,4 +1,5 @@
 { 
+  "admin": "https://raw.githubusercontent.com/Azadwebapi/Azadx69x-blackmarket-top/refs/heads/main/cmd/admin.js",
   "segs": "https://raw.githubusercontent.com/Azadwebapi/Azadx69x-blackmarket-api/refs/heads/main/cmd/segs.js",
   "tiktok": "https://raw.githubusercontent.com/Azadwebapi/Azadx69x-blackmarket-api/refs/heads/main/cmd/tiktok.js",
   "anime": "https://raw.githubusercontent.com/Azadwebapi/Azadx69x-blackmarket-api/refs/heads/main/cmd/anime.js",
