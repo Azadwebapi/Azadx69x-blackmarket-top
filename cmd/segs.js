@@ -7,13 +7,13 @@ module.exports = {
   config: {
     name: "segs",
     version: "1.5",
-    author: "Azadx69x",//Author change korle tor marechudi 
+    author: "Azadx69x",
     role: 0,
     category: "18+",
     shortDescription: "Search & select HD videos",
-    longDescription: "Search, paginate and download HD porn videos"
+    longDescription: "Search, paginate and download HD videos"
   },
-  
+
   onStart: async ({ api, event, args }) => {
     const keyword = args.join(" ");
     const thread = event.threadID;
@@ -21,31 +21,25 @@ module.exports = {
 
     if (!keyword)
       return api.sendMessage(
-`❗ 𝗞𝗘𝗬𝗪𝗢𝗥𝗗
-      👉 Example: /segs mia khalifa`,
+        "❗ 𝗞𝗘𝗬𝗪𝗢𝗥𝗗\n👉 Example: /segs mia khalifa",
         thread
       );
 
-    api.sendMessage(
-`🔍 𝗦𝗘𝗔𝗥𝗖𝗛𝗜𝗡𝗚...
-      Please wait...`,
-      thread
-    );
+    api.sendMessage("🔍 𝗦𝗘𝗔𝗥𝗖𝗛𝗜𝗡𝗚...\nPlease wait...", thread);
 
     try {
       const res = await axios.get(
-        `https://azadx69x-segs.onrender.com/api/search?q=${encodeURIComponent(keyword)}`
+        `https://azadx69x-segs.vercel.app/api/search?q=${encodeURIComponent(keyword)}`
       );
 
       const results = res.data.list;
 
       if (!results.length)
         return api.sendMessage(
-`❌ 𝗡𝗢 𝗥𝗘𝗦𝗨𝗟𝗧
-Video paowa gelo na!`,
+          "❌ 𝗡𝗢 𝗥𝗘𝗦𝗨𝗟𝗧\nVideo paowa gelo na!",
           thread
         );
-      
+
       userSession[sender] = {
         results,
         page: 0,
@@ -56,14 +50,10 @@ Video paowa gelo na!`,
       sendPage(api, thread, sender);
 
     } catch (e) {
-      api.sendMessage(
-`❌ 𝗘𝗥𝗥𝗢𝗥
-Search error!`,
-        thread
-      );
+      api.sendMessage("❌ 𝗘𝗥𝗥𝗢𝗥\nSearch error!", thread);
     }
   },
-  
+
   onChat: async ({ api, event }) => {
     const sender = event.senderID;
     const thread = event.threadID;
@@ -73,15 +63,11 @@ Search error!`,
 
     if (Date.now() > userSession[sender].expires) {
       delete userSession[sender];
-      return api.sendMessage(
-`⏳ 𝗧𝗜𝗠𝗘 𝗢𝗨𝗧
-   Abar )segs use korun.`,
-        thread
-      );
+      return api.sendMessage("⏳ 𝗧𝗜𝗠𝗘 𝗢𝗨𝗧\nAbar )segs use korun.", thread);
     }
 
     const session = userSession[sender];
-    
+
     if (msg === "next") {
       if ((session.page + 1) * session.perPage >= session.results.length)
         return api.sendMessage("❗ Last page!", thread);
@@ -89,7 +75,7 @@ Search error!`,
       session.page++;
       return sendPage(api, thread, sender);
     }
-    
+
     if (msg === "prev") {
       if (session.page === 0)
         return api.sendMessage("❗ Page 1 e achen!", thread);
@@ -97,7 +83,7 @@ Search error!`,
       session.page--;
       return sendPage(api, thread, sender);
     }
-    
+
     if (/^\d+$/.test(msg)) {
       const number = parseInt(msg);
       const start = session.page * session.perPage;
@@ -109,7 +95,7 @@ Search error!`,
       const item = session.results[index];
 
       api.sendMessage(
-`╔══ ⬇𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗜𝗡𝗚 ══╗
+        `╔══ ⬇𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗜𝗡𝗚 ══╗
 🎬 ${item.name}
 Please wait...
 ╚═════════════════╝`,
@@ -129,7 +115,7 @@ Please wait...
         api.sendMessage(
           {
             body:
-`╔══ ✨ 𝗩𝗜𝗗𝗘𝗢 𝗥𝗘𝗔𝗗𝗬 ══╗
+              `╔══ ✨ 𝗩𝗜𝗗𝗘𝗢 𝗥𝗘𝗔𝗗𝗬 ══╗
 🎬 ${item.name}
 Made by 𝐀𝐳𝐚𝐝𝐱𝟔𝟗𝐱 💜
 ╚════════════════╝`,
@@ -152,25 +138,23 @@ Made by 𝐀𝐳𝐚𝐝𝐱𝟔𝟗𝐱 💜
   }
 };
 
-
 function sendPage(api, thread, user) {
   const s = userSession[user];
   const start = s.page * s.perPage;
   const end = Math.min(start + s.perPage, s.results.length);
 
   let msg =
-`╔═🔥 𝗛𝗗 𝗩𝗜𝗗𝗘𝗢 𝗦𝗘𝗔𝗥𝗖𝗛 🔥═╗
+    `╔═🔥 𝗛𝗗 𝗩𝗜𝗗𝗘𝗢 𝗦𝗘𝗔𝗥𝗖𝗛 🔥═╗
 📄 Page: ${s.page + 1}
 🎯 Results: ${start + 1} - ${end} of ${s.results.length}
 ╚═══════════════════╝
-
 
 `;
 
   s.results.slice(start, end).forEach((item, i) => {
     msg +=
-`┏━━━━━━━━━━━━━━━━━━━━┓
-┃ 🆔 **${i + 1}. ${item.name}**
+      `┏━━━━━━━━━━━━━━━━━━━━┓
+┃ 🆔 ${i + 1}. ${item.name}
 ┃ ⏱ Duration: ${item.time}
 ┗━━━━━━━━━━━━━━━━━━━━┛
 
@@ -178,9 +162,9 @@ function sendPage(api, thread, user) {
   });
 
   msg +=
-`╔══ 📌 𝗖𝗢𝗡𝗧𝗥𝗢𝗟𝗦 ═╗
-➡ Next Page:   next
-⬅ Prev Page:   prev
+    `╔══ 📌 𝗖𝗢𝗡𝗧𝗥𝗢𝗟𝗦 ═╗
+➡ Next Page: next
+⬅ Prev Page: prev
 🎬 Select Video: 1 - 20
 ╚══════════════╝
 
